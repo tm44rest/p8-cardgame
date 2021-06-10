@@ -1,6 +1,5 @@
 function _init()
-  controller = combat
-  controller.init()
+  switch_controller(combat)
 end
 
 function _update()

@@ -2,7 +2,7 @@
 
 function switch_controller(ctrl)
   controller = ctrl
-  ctrl.init()
+  if ctrl.init then ctrl.init(ctrl) end
 end
 
 titlescreen = {}
@@ -19,13 +19,25 @@ end
 
 combat = {}
 function combat:init() 
+  -- create menu buttons
+  menu = create_menu_buttons()
+  selected = menu[1]
+
+  -- testing features of the hand
   hand = {}
   for i=0,7 do
-    add(hand,create(test))
+    add(hand,create_card(test))
   end
 end
 function combat:update()
-  
+  if btnp(0) then selected:move(0)
+  elseif btnp(1) then selected:move(1)
+  elseif btnp(2) then selected:move(2)
+  elseif btnp(3) then selected:move(3)
+  end
+  if btnp(4) then selected:press(4)
+  elseif btnp(5) then selected:press(5)
+  end
 end
 function combat:draw()
   cls()
@@ -57,5 +69,8 @@ function combat:draw()
       print(c.cost,52,65+(n-5)*8,7)
     end
   end
+
+  -- draw menu button
+  selected.draw()
 
 end

@@ -29,13 +29,17 @@ function new_cardtype(type, rarity)
   return crd
 end
 
-function create(card)
+meme = 2
+
+function create_card(card)
   local crd = {
-    __index = card
+    __index = card,
+    x = 2,
+    y = 3
   }
   setmetatable(crd, crd)
   add(cards, crd)
-  return crd  
+  return crd
 end
 
 -- test card
