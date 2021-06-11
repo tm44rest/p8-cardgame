@@ -3,9 +3,9 @@ buttons = {}
 button = {}
 function button:press(inp) 
   if inp == 4 then
-    if self.circle_effect then self:circle_effect() end
+    self:circle_effect()
   elseif inp == 5 then
-    if self.cross_effect then self:cross_effect() end
+    self:cross_effect()
   end
 end
 function button:move(btn) 
@@ -25,7 +25,7 @@ function create_button(draw, circle_effect, cross_effect)
   btn = {
     __index = button,
     draw = draw,
-    circle_effect = cricle_effect or function () end,
+    circle_effect = circle_effect or function () end,
     cross_effect = cross_effect or function () end
   }
   setmetatable(btn,btn)
@@ -52,11 +52,11 @@ function create_menu_buttons()
       if i < 5 then
         local c = hand[i+1]
         if c then
-          c:effect()
+          play_card(c)
         end
       end
     end
-    local b = create_button(f,function () end, e)
+    local b = create_button(f,e)
     b.effect = function ()
 
     end
@@ -82,7 +82,7 @@ function create_menu_buttons()
         end
       end
     end
-    local b = create_button(f,function () end, e)
+    local b = create_button(f,e)
     add(menu, b)
   end
   for i=1,7 do

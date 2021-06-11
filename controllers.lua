@@ -25,8 +25,14 @@ function combat:init()
 
   -- testing features of the hand
   hand = {}
+  discard = {}
+  card_id = 0
   for i=0,7 do
-    add(hand,create_card(test))
+    if i % 3 == 0 then
+      add(hand,create_card(test2))
+    else
+      add(hand,create_card(test))
+    end
   end
 end
 function combat:update()
