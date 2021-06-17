@@ -7,6 +7,9 @@ __lua__
 #include controllers.lua
 #include cards.lua
 #include buttons.lua
+#include encounters.lua
+#include monsters.lua
+#include player.lua
 
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

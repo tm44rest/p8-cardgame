@@ -1,3 +1,5 @@
+-- give buttons a draw fn that is drawn when they arent selected...
+-- then you don't need that horrendous garbage inside of the combat controller lmao
 buttons = {}
 
 button = {}
@@ -52,16 +54,14 @@ function create_menu_buttons()
       if i < 5 then
         local c = hand[i+1]
         if c then
-          play_card(c)
+          c:play()
         end
       end
     end
     local b = create_button(f,e)
-    b.effect = function ()
-
-    end
     add(menu, b)
   end
+  -- duplicated; refactor
   for i=0,6 do
     local f = function () 
       rect(28,71+8*i,56,79+8*i,10) 
@@ -78,8 +78,13 @@ function create_menu_buttons()
       if i < 5 then
         local c = hand[i+6]
         if c then
-          c:effect()
+          c:play()
         end
+      elseif i == 6 then
+        for c in all(hand) do
+          c:discard()
+        end
+        enemy_turn_init()
       end
     end
     local b = create_button(f,e)
