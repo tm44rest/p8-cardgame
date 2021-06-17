@@ -58,7 +58,10 @@ function create_menu_buttons()
         end
       end
     end
-    local b = create_button(f,e)
+    local g = function ()
+      selected = menu[14]
+    end
+    local b = create_button(f,e,g)
     add(menu, b)
   end
   -- duplicated; refactor
@@ -87,7 +90,10 @@ function create_menu_buttons()
         enemy_turn_init()
       end
     end
-    local b = create_button(f,e)
+    local g = function ()
+      selected = menu[14]
+    end
+    local b = create_button(f,e,g)
     add(menu, b)
   end
   for i=1,7 do

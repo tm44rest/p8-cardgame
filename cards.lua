@@ -6,16 +6,16 @@ cards = {}
 card_id = 0
 
 -- default card object
-default = {}
-default.name = "unimplemented"
-default.abbreviation = "unimp"
-default.description = "unimplemented"
-default.cost = -1
-function default:discard()
+default_card = {}
+default_card.name = "unimplemented"
+default_card.abbreviation = "unimp"
+default_card.description = "unimplemented"
+default_card.cost = -1
+function default_card:discard()
   del(hand,self)
   add(discard,self)
 end
-function default:play()
+function default_card:play()
   if self.cost <= player_curenergy then
     player_curenergy -= self.cost
     self:effect()
@@ -36,8 +36,9 @@ function new_cardtype(type, rarity)
   -- 2 = uncommon
   -- 3 = rare
   local crd = {
-    __index = default,
-    type = type
+    __index = default_card,
+    type = type,
+    rarity = rarity
   }
   setmetatable(crd, crd)
   add(cardtypes, crd)
@@ -56,24 +57,37 @@ function create_card(card)
 end
 
 -- test cards
-test = new_cardtype(0,1)
-test.name = "test"
-test.abbreviation = "test"
-test.description = "this is a test card"
+test = new_cardtype(0,0)
+test.name = "strike"
+test.abbreviation = "strk"
+test.description = "deal 5 damage"
 test.cost = 1
 function test:effect() 
   sfx(0)
 end
 
-test2 = new_cardtype(2,0)
-test2.name = "test2"
-test2.abbreviation = "hi"
-test2.description = "hello world"
-test2.cost = 0
+test2 = new_cardtype(1,0)
+test2.name = "defend"
+test2.abbreviation = "dfnd"
+test2.description = "gain 5 block"
+test2.cost = 1
 function test2:effect()
   sfx(1)
 end
 
 -- shuffle any table, but used for draw pile primarily
 function shuffle(t)
+  -- Knuth Shuffle
+  for x=0,count(t)-2 do
+    local i=count(t)-x
+    local j = flr(rnd(i))+1
+    swap(t,i,j) 
+  end
+end
+
+-- swap elements i and j in table t
+function swap(t,i,j)
+  local temp = t[i]
+  t[i] = t[j]
+  t[j] = temp
 end

@@ -20,9 +20,11 @@ end
 -- potentially break combat update fn into player turn vs enemy turn
 combat = {}
 function combat:init() 
+  -- test with encounter 1
+  encounter1()
+
   -- create menu buttons
   menu = create_menu_buttons()
-  selected = menu[1]
   for c in all(deck) do
     add(draw,c)
   end
@@ -84,6 +86,15 @@ function combat:draw()
   -- draw menu button
   selected.draw()
 
+  -- draw monsters
+  for m in all(monsters) do
+    m:draw()
+  end
+
+  -- draw player
+  spr(1,20,35,1,2)
+  print(player_curhp .. "/" .. player_maxhp,14,52,8)
+
 end
 
 function player_turn_init() 
@@ -96,6 +107,7 @@ function player_turn_init()
       draw_card()
     end
   end
+  selected = menu[1]
 end
 
 function enemy_turn_init()
