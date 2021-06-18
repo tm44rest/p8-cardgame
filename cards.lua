@@ -16,25 +16,36 @@ function default_card:discard()
   add(discard,self)
 end
 function default_card:play()
-  if self.cost <= player_curenergy then
+  self:effect()
+  -- if played from the hand, discard and subtract cost
+  if del(hand,self) then 
     player_curenergy -= self.cost
-    self:effect()
-    -- only discard if played from hand
-    if del(hand,self) then add(discard,self) end
-  else 
+    add(discard,self) 
+  end
+end
+function default_card:select()
+  if self.cost <= player_curenergy then
+    self:play()
+  else
     -- mean sound effect
   end
 end
 
-function new_cardtype(type, rarity)
+function new_cardtype(type, rarity, target)
   -- type:
   -- 0 = atk
   -- 1 = skl
+
   -- rarity:
   -- 0 = basic
   -- 1 = common
   -- 2 = uncommon
   -- 3 = rare
+
+  -- target:
+  -- 0 = self
+  -- 1 = single enemy
+  -- 2 = all enemies
   local crd = {
     __index = default_card,
     type = type,
@@ -57,7 +68,7 @@ function create_card(card)
 end
 
 -- test cards
-test = new_cardtype(0,0)
+test = new_cardtype(0,0,1)
 test.name = "strike"
 test.abbreviation = "strk"
 test.description = "deal 5 damage"
@@ -66,7 +77,7 @@ function test:effect()
   sfx(0)
 end
 
-test2 = new_cardtype(1,0)
+test2 = new_cardtype(1,0,0)
 test2.name = "defend"
 test2.abbreviation = "dfnd"
 test2.description = "gain 5 block"

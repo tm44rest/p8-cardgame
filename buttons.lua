@@ -54,7 +54,7 @@ function create_menu_buttons()
       if i < 5 then
         local c = hand[i+1]
         if c then
-          c:play()
+          c:select()
         end
       end
     end
@@ -81,7 +81,7 @@ function create_menu_buttons()
       if i < 5 then
         local c = hand[i+6]
         if c then
-          c:play()
+          c:select()
         end
       elseif i == 6 then
         for c in all(hand) do
